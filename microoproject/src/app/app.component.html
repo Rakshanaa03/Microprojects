@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" />
+</head>
+<body>
+  <h1>To-Do List Management System</h1>
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-md-10">
+        <form #myForm="ngForm">
+          <div class="form-group">
+            <label for="Task Id">Task Id</label>
+            <input
+              type="text"
+              class="form-control"
+              name="id"
+              #id="ngModel"
+              ngModel
+              required
+              pattern="[0-9]+"
+            />
+            <div *ngIf="id.touched">
+              <div *ngIf="id.errors?.['required']">
+                <font color="red"><b>Task Id Required</b></font>
+              </div>
+              <div *ngIf="id.errors?.['pattern']">
+                <font color="red"><b>Wrong input</b></font>
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="Task Description">Task Description</label>
+            <input
+              type="text"
+              class="form-control"
+              name="description"
+              #description="ngModel"
+              ngModel
+              required
+            />
+            <div *ngIf="description.touched && description.errors?.['required']">
+              <font color="red"><b>Task Description Required</b></font>
+            </div>
+          </div>
+
+          <button type="button" class="btn btn-success" (click)="insertTask(myForm.value)">Insert</button>
+          &nbsp;&nbsp;
+          <button type="button" class="btn btn-primary" (click)="updateTask(myForm.value)">Update</button>
+          &nbsp;&nbsp;
+          <button type="button" class="btn btn-danger" (click)="deleteTask(myForm.value)">Delete</button>
+          &nbsp;&nbsp;
+          <button type="button" class="btn btn-warning" (click)="findTaskById(myForm.value.id)">Find</button>
+          &nbsp;&nbsp;
+          <button type="button" class="btn btn-info" (click)="findAllTasks()">Find All</button>
+        </form>
+      </div>
+    </div>
+  </div>
+  <h3>{{ result }}</h3>
+  <div *ngIf="flag">
+    <table width="80%" align="center" class="table table-bordered">
+      <thead>
+        <tr>
+          <th>Task Id</th>
+          <th>Task Description</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let task of taskArr">
+          <td>{{ task.id }}</td>
+          <td>{{ task.description }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</body>
+</html>
